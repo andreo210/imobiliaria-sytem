@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnoveL - Dashboard</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--dark);
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .menu-item.active {
+            background-color: var(--primary);
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-nav {
+            background-color: var(--white);
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: var(--light);
+            border-radius: 20px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            margin-left: 8px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-left: 15px;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .stat-card.primary {
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-card.success {
+            border-left: 4px solid var(--secondary);
+        }
+
+        .stat-card.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .stat-card.danger {
+            border-left: 4px solid var(--danger);
+        }
+
+        .dashboard-sections {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .view-all {
+            color: var(--primary);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .list-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .item-info p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status.active {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: var(--secondary);
+        }
+
+        .status.pending {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: var(--warning);
+        }
+
+        .calendar {
+            margin-top: 20px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .day-name {
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray);
+            padding: 5px;
+        }
+
+        .calendar-dates {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .date {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .date.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .date.event {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .date.other-month {
+            color: var(--gray);
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 70px;
+            }
+
+            .sidebar .menu-text {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>InnoveL</h2>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active">
+                    <i>📊</i>
+                    <span class="menu-text">Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <i>🏠</i>
+                    <span class="menu-text">Imóveis</span>
+                </div>
+                <div class="menu-item">
+                    <i>👥</i>
+                    <span class="menu-text">Clientes</span>
+                </div>
+                <div class="menu-item">
+                    <i>📝</i>
+                    <span class="menu-text">Contratos</span>
+                </div>
+                <div class="menu-item">
+                    <i>💰</i>
+                    <span class="menu-text">Pagamentos</span>
+                </div>
+                <div class="menu-item">
+                    <i>👨‍💼</i>
+                    <span class="menu-text">Usuários</span>
+                </div>
+                <div class="menu-item">
+                    <i>📅</i>
+                    <span class="menu-text">Visitas</span>
+                </div>
+                <div class="menu-item">
+                    <i>⚙️</i>
+                    <span class="menu-text">Configurações</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Navigation -->
+            <div class="top-nav">
+                <div class="search-bar">
+                    <i>🔍</i>
+                    <input type="text" placeholder="Pesquisar...">
+                </div>
+                <div class="user-info">
+                    <span>João Silva</span>
+                    <div class="user-avatar">JS</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <h1 class="page-title">Dashboard</h1>
+
+                <!-- Stats Cards -->
+                <div class="stats-cards">
+                    <div class="stat-card primary">
+                        <i>🏠</i>
+                        <div class="value">24</div>
+                        <div class="label">Imóveis Ativos</div>
+                    </div>
+                    <div class="stat-card success">
+                        <i>👥</i>
+                        <div class="value">42</div>
+                        <div class="label">Clientes</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <i>📝</i>
+                        <div class="value">18</div>
+                        <div class="label">Contratos Ativos</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <i>💰</i>
+                        <div class="value">R$ 45.670</div>
+                        <div class="label">Receita do Mês</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Sections -->
+                <div class="dashboard-sections">
+                    <!-- Left Column -->
+                    <div>
+                        <!-- Recent Properties -->
+                        <div class="section">
+                            <div class="section-header">
+                                <h3 class="section-title">Imóveis Recentes</h3>
+                                <span class="view-all">Ver todos</span>
+                            </div>
+                            <div class="section-content">
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Apartamento Centro</h4>
+                                        <p>R$ 350.000</p>
+                                    </div>
+                                    <span class="status active">Ativo</span>
+                                </div>
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Casa Jardins</h4>
+                                        <p>R$ 850.000</p>
+                                    </div>
+                                    <span class="status active">Ativo</span>
+                                </div>
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Sala Comercial</h4>
+                                        <p>R$ 2.500/mês</p>
+                                    </div>
+                                    <span class="status pending">Alugado</span>
+                                </div>
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Terreno Residencial</h4>
+                                        <p>R$ 120.000</p>
+                                    </div>
+                                    <span class="status active">Ativo</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Contracts -->
+                        <div class="section" style="margin-top: 20px;">
+                            <div class="section-header">
+                                <h3 class="section-title">Contratos Recentes</h3>
+                                <span class="view-all">Ver todos</span>
+                            </div>
+                            <div class="section-content">
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Contrato #CT0012</h4>
+                                        <p>Maria Silva - Apartamento Centro</p>
+                                    </div>
+                                    <span class="status active">Ativo</span>
+                                </div>
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Contrato #CT0011</h4>
+                                        <p>João Santos - Casa Jardins</p>
+                                    </div>
+                                    <span class="status active">Ativo</span>
+                                </div>
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Contrato #CT0010</h4>
+                                        <p>Empresa XYZ - Sala Comercial</p>
+                                    </div>
+                                    <span class="status pending">Pendente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div>
+                        <!-- Upcoming Visits -->
+                        <div class="section">
+                            <div class="section-header">
+                                <h3 class="section-title">Próximas Visitas</h3>
+                                <span class="view-all">Ver todas</span>
+                            </div>
+                            <div class="section-content">
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Apartamento Centro</h4>
+                                        <p>Hoje, 14:30 - Ana Costa</p>
+                                    </div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Casa Jardins</h4>
+                                        <p>Amanhã, 10:00 - Pedro Almeida</p>
+                                    </div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="item-info">
+                                        <h4>Sala Comercial</h4>
+                                        <p>15/06, 16:00 - Empresa ABC</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calendar -->
+                        <div class="section" style="margin-top: 20px;">
+                            <div class="section-header">
+                                <h3 class="section-title">Calendário</h3>
+                            </div>
+                            <div class="calendar">
+                                <div class="calendar-header">
+                                    <span>Junho 2023</span>
+                                    <div>
+                                        <button><</button>
+                                        <button>></button>
+                                    </div>
+                                </div>
+                                <div class="calendar-days">
+                                    <div class="day-name">Dom</div>
+                                    <div class="day-name">Seg</div>
+                                    <div class="day-name">Ter</div>
+                                    <div class="day-name">Qua</div>
+                                    <div class="day-name">Qui</div>
+                                    <div class="day-name">Sex</div>
+                                    <div class="day-name">Sáb</div>
+                                </div>
+                                <div class="calendar-dates">
+                                    <!-- This would be generated dynamically -->
+                                    <div class="date other-month">28</div>
+                                    <div class="date other-month">29</div>
+                                    <div class="date other-month">30</div>
+                                    <div class="date other-month">31</div>
+                                    <div class="date">1</div>
+                                    <div class="date">2</div>
+                                    <div class="date">3</div>
+                                    <div class="date">4</div>
+                                    <div class="date">5</div>
+                                    <div class="date">6</div>
+                                    <div class="date">7</div>
+                                    <div class="date">8</div>
+                                    <div class="date">9</div>
+                                    <div class="date">10</div>
+                                    <div class="date">11</div>
+                                    <div class="date">12</div>
+                                    <div class="date">13</div>
+                                    <div class="date event">14</div>
+                                    <div class="date active">15</div>
+                                    <div class="date">16</div>
+                                    <div class="date">17</div>
+                                    <div class="date">18</div>
+                                    <div class="date">19</div>
+                                    <div class="date">20</div>
+                                    <div class="date">21</div>
+                                    <div class="date">22</div>
+                                    <div class="date">23</div>
+                                    <div class="date">24</div>
+                                    <div class="date">25</div>
+                                    <div class="date">26</div>
+                                    <div class="date">27</div>
+                                    <div class="date">28</div>
+                                    <div class="date">29</div>
+                                    <div class="date">30</div>
+                                    <div class="date other-month">1</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

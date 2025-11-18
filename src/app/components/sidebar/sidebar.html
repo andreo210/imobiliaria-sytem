@@ -1,0 +1,15 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>InnoveL</h2>
+  </div>
+
+  <nav class="sidebar-menu">
+    <div *ngFor="let item of menuItems"
+         class="menu-item"
+         [class.active]="item.active"
+         (click)="navigateTo(item.route, item)">
+      <span class="menu-icon">{{ item.icon }}</span>
+      <span class="menu-text">{{ item.label }}</span>
+    </div>
+  </nav>
+</aside>

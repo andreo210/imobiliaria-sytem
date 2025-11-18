@@ -1,0 +1,63 @@
+<header class="top-nav">
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input
+      type="text"
+      placeholder="Pesquisar..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+    >
+  </div>
+
+  <div class="user-info">
+    <div class="user-details">
+      <span class="user-name">{{ userName }}</span>
+      <span class="user-role">{{ userRole }}</span>
+    </div>
+
+    <div class="user-actions">
+      <button class="notification-btn" (click)="toggleNotifications()">
+        <span class="notification-icon">🔔</span>
+        <span *ngIf="unreadNotifications > 0" class="notification-badge">
+          {{ unreadNotifications }}
+        </span>
+      </button>
+
+      <div class="user-avatar" (click)="toggleUserMenu()">
+        {{ userInitials }}
+      </div>
+
+      <div *ngIf="showUserMenu" class="user-menu">
+        <div class="menu-item" (click)="navigateToProfile()">
+          <span>👤</span> Meu Perfil
+        </div>
+        <div class="menu-item" (click)="openSettings()">
+          <span>⚙️</span> Configurações
+        </div>
+        <div class="menu-divider"></div>
+        <div class="menu-item logout" (click)="logout()">
+          <span>🚪</span> Sair
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications Panel -->
+  <div *ngIf="showNotifications" class="notifications-panel">
+    <div class="notifications-header">
+      <h3>Notificações</h3>
+      <button class="close-btn" (click)="toggleNotifications()">×</button>
+    </div>
+    <div class="notifications-list">
+      <div *ngFor="let notification of notifications"
+           class="notification-item"
+           [class.unread]="!notification.read">
+        <div class="notification-icon">📋</div>
+        <div class="notification-content">
+          <p class="notification-text">{{ notification.text }}</p>
+          <span class="notification-time">{{ notification.time }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
