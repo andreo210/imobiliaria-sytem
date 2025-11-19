@@ -1,0 +1,132 @@
+<div class="cliente-form">
+  <!-- Cabeçalho -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        {{ isEdit ? 'Editar Cliente' : 'Novo Cliente' }}
+      </h1>
+      <p class="page-subtitle">
+        {{ isEdit ? 'Atualize os dados do cliente-form' : 'Cadastre um novo cliente-form no sistema' }}
+      </p>
+    </div>
+    <button type="button" class="btn-back" (click)="onCancel()">
+      ← Voltar
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>{{ isEdit ? 'Carregando dados...' : 'Salvando...' }}</p>
+  </div>
+
+  <!-- Mensagens de Erro -->
+  <div *ngIf="errors.length > 0" class="alert alert-error">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-content">
+      <h4>Erro no formulário</h4>
+      <ul>
+        <li *ngFor="let error of errors">{{ error }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Formulário -->
+  <form *ngIf="!loading" (ngSubmit)="onSubmit()" class="form">
+    <div class="form-grid">
+
+      <!-- Informações Básicas -->
+      <div class="form-section">
+        <h3 class="section-title">Informações Básicas</h3>
+
+        <div class="form-group">
+          <label for="nome" class="form-label">
+            Nome Completo *
+          </label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            [(ngModel)]="cliente.nome"
+            class="form-input"
+            placeholder="Digite o nome completo"
+            required
+          >
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email" class="form-label">
+              Email *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="cliente.email"
+              class="form-input"
+              placeholder="exemplo@email.com"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="telefone" class="form-label">
+              Telefone *
+            </label>
+            <input
+              type="tel"
+              id="telefone"
+              name="telefone"
+              [(ngModel)]="cliente.telefone"
+              class="form-input"
+              placeholder="(11) 99999-9999"
+              required
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Interesses -->
+      <div class="form-section">
+        <h3 class="section-title">Interesses do Cliente</h3>
+
+        <div class="form-group">
+          <label for="interesse" class="form-label">
+            Interesses / Observações
+          </label>
+          <textarea
+            id="interesse"
+            name="interesse"
+            [(ngModel)]="cliente.observacao"
+            class="form-textarea"
+            placeholder="Descreva os interesses do cliente, tipo de imóvel preferido, localização, etc."
+            rows="4"
+          ></textarea>
+          <small class="form-help">
+            Esta informação ajudará a encontrar imóveis que correspondam aos interesses do cliente.
+          </small>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Ações do Formulário -->
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onCancel()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!isFormValid() || loading"
+      >
+        {{ isEdit ? 'Atualizar Cliente' : 'Cadastrar Cliente' }}
+      </button>
+    </div>
+  </form>
+</div>

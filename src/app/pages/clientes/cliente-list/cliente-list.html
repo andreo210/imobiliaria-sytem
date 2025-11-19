@@ -1,0 +1,89 @@
+<div class="cliente-list">
+  <!-- Cabeçalho -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Clientes</h1>
+      <p class="page-subtitle">Gerencie todos os clientes do sistema</p>
+    </div>
+    <button
+      routerLink="/clientes/new"
+      class="btn btn-primary"
+    >
+      + Novo Cliente
+    </button>
+  </div>
+
+  <!-- Mensagem de Sucesso -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    <div class="alert-icon">✅</div>
+    <div class="alert-content">
+      {{ successMessage }}
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando clientes...</p>
+  </div>
+
+  <!-- Lista de Clientes -->
+  <div *ngIf="!loading" class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        Total de Clientes: {{ clientes.length }}
+      </h3>
+    </div>
+
+    <div class="card-content">
+      <div *ngIf="clientes.length === 0" class="empty-state">
+        <div class="empty-icon">👥</div>
+        <h3>Nenhum cliente cadastrado</h3>
+        <p>Comece cadastrando seu primeiro cliente no sistema.</p>
+        <button routerLink="/clientes/new" class="btn btn-primary">
+          Cadastrar Primeiro Cliente
+        </button>
+      </div>
+
+      <div *ngIf="clientes.length > 0" class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>Data de Cadastro</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cliente of clientes">
+              <td class="client-name">
+                <strong>{{ cliente.nome }}</strong>
+              </td>
+              <td>{{ cliente.email }}</td>
+              <td>{{ cliente.telefone }}</td>
+              <td>{{ formatarData(cliente.criado_em!) }}</td>
+              <td class="actions">
+                <button
+                  (click)="editarCliente(cliente)"
+                  class="btn-action btn-edit"
+                  title="Editar"
+                >
+                  ✏️
+                </button>
+                <button
+                  (click)="excluirCliente(cliente)"
+                  class="btn-action btn-delete"
+                  title="Excluir"
+                >
+                  🗑️
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

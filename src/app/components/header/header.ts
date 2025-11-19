@@ -23,7 +23,7 @@ export class HeaderComponent {
     { text: 'Novo contrato criado para Apartamento Centro', time: '5 min ago', read: false },
     { text: 'Visita agendada para Casa Jardins amanhã', time: '1 hora atrás', read: true },
     { text: 'Pagamento recebido de Maria Silva', time: '2 horas atrás', read: true },
-    { text: 'Novo cliente cadastrado no sistema', time: '1 dia atrás', read: true }
+    { text: 'Novo cliente-form cadastrado no sistema', time: '1 dia atrás', read: true }
   ];
 
   constructor(private router: Router) {}

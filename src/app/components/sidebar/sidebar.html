@@ -6,10 +6,33 @@
   <nav class="sidebar-menu">
     <div *ngFor="let item of menuItems"
          class="menu-item"
-         [class.active]="item.active"
-         (click)="navigateTo(item.route, item)">
-      <span class="menu-icon">{{ item.icon }}</span>
-      <span class="menu-text">{{ item.label }}</span>
+         [class.active]="item.active || (item.children && hasActiveChild(item.children))"
+         [class.has-children]="item.children"
+         [class.expanded]="item.expanded">
+
+      <!-- Item Principal -->
+      <div class="menu-main-item" (click)="navigateTo(item.route || '', item)">
+        <div class="menu-left">
+          <span class="menu-icon">{{ item.icon }}</span>
+          <span class="menu-text">{{ item.label }}</span>
+        </div>
+
+        <!-- Seta para itens com submenu -->
+        <span *ngIf="item.children" class="menu-arrow">
+          {{ item.expanded ? '▼' : '▶' }}
+        </span>
+      </div>
+
+      <!-- Submenu -->
+      <div *ngIf="item.children && item.expanded" class="submenu">
+        <div *ngFor="let child of item.children"
+             class="submenu-item"
+             [class.active]="child.active"
+             (click)="navigateToSubmenu(item, child, $event)">
+          <span class="submenu-icon">•</span>
+          <span class="submenu-text">{{ child.label }}</span>
+        </div>
+      </div>
     </div>
   </nav>
 </aside>
