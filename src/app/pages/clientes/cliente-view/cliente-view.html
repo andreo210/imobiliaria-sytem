@@ -1,0 +1,180 @@
+<div class="cliente-view">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando dados do cliente...</p>
+  </div>
+
+  <!-- Erro -->
+  <div *ngIf="error && !loading" class="error-state">
+    <div class="error-icon">⚠️</div>
+    <h3>Erro ao carregar cliente</h3>
+    <p>{{ error }}</p>
+    <button (click)="voltarParaLista()" class="btn btn-primary">
+      Voltar para Lista
+    </button>
+  </div>
+
+  <!-- Conteúdo do Cliente -->
+  <div *ngIf="cliente && !loading" class="cliente-content">
+
+    <!-- Cabeçalho -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="breadcrumb">
+          <a routerLink="/clientes">Clientes</a>
+          <span class="separator">/</span>
+          <span>Visualizar Cliente</span>
+        </div>
+        <h1 class="page-title">{{ cliente.nome }}</h1>
+        <p class="page-subtitle">Detalhes completos do cliente</p>
+      </div>
+
+      <div class="header-actions">
+        <button (click)="voltarParaLista()" class="btn btn-secondary">
+          ← Voltar
+        </button>
+        <button (click)="editarCliente()" class="btn btn-primary">
+          ✏️ Editar Cliente
+        </button>
+      </div>
+    </div>
+
+    <!-- Grid de Informações -->
+    <div class="info-grid">
+
+      <!-- Card Informações Pessoais -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="card-icon">👤</span>
+            Informações Pessoais
+          </h3>
+        </div>
+        <div class="card-content">
+          <div class="info-item">
+            <label class="info-label">Nome Completo</label>
+            <p class="info-value">{{ cliente.nome }}</p>
+          </div>
+
+          <div class="info-item">
+            <label class="info-label">Email</label>
+            <p class="info-value">
+              <a [href]="'mailto:' + cliente.email" class="email-link">
+                {{ cliente.email }}
+              </a>
+            </p>
+          </div>
+
+          <div class="info-item">
+            <label class="info-label">Telefone</label>
+            <p class="info-value">
+              <a [href]="'tel:' + cliente.telefone" class="phone-link">
+                {{ formatarTelefone(cliente.telefone) }}
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Informações do Sistema -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="card-icon">📋</span>
+            Informações do Sistema
+          </h3>
+        </div>
+        <div class="card-content">
+          <div class="info-item">
+            <label class="info-label">ID do Cliente</label>
+            <p class="info-value">#{{ cliente.id }}</p>
+          </div>
+
+          <div class="info-item">
+            <label class="info-label">Data de Cadastro</label>
+            <p class="info-value">{{ formatarData(cliente.criado_em!) }}</p>
+          </div>
+
+          <div class="info-item">
+            <label class="info-label">Status</label>
+            <span class="status-badge active">Ativo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Interesses (se existir) -->
+      <div *ngIf="cliente.observacao" class="info-card full-width">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="card-icon">🎯</span>
+            Interesses e Observações
+          </h3>
+        </div>
+        <div class="card-content">
+          <div class="info-item">
+            <p class="interesse-text">{{ cliente.observacao }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Estatísticas (placeholder para futuras implementações) -->
+      <div class="info-card full-width">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="card-icon">📊</span>
+            Estatísticas do Cliente
+          </h3>
+        </div>
+        <div class="card-content">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-number">0</div>
+              <div class="stat-label">Contratos Ativos</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">0</div>
+              <div class="stat-label">Visitas Realizadas</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">R$ 0</div>
+              <div class="stat-label">Valor em Contratos</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">0</div>
+              <div class="stat-label">Imóveis Favoritos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Ações Rápidas -->
+    <div class="actions-section">
+      <h3 class="section-title">Ações Rápidas</h3>
+      <div class="actions-grid">
+        <button class="action-btn" [routerLink]="['/contratos', 'new']" [queryParams]="{ clienteId: cliente.id }">
+          <span class="action-icon">📝</span>
+          <span class="action-text">Novo Contrato</span>
+        </button>
+
+        <button class="action-btn" [routerLink]="['/visitas', 'new']" [queryParams]="{ clienteId: cliente.id }">
+          <span class="action-icon">📅</span>
+          <span class="action-text">Agendar Visita</span>
+        </button>
+
+        <button class="action-btn">
+          <span class="action-icon">💰</span>
+          <span class="action-text">Registrar Pagamento</span>
+        </button>
+
+        <button class="action-btn">
+          <span class="action-icon">📧</span>
+          <span class="action-text">Enviar Email</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

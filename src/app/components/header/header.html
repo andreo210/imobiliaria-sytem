@@ -1,63 +1,170 @@
+<!-- ============================================= -->
+<!-- HEADER / CABEÇALHO DO SISTEMA -->
+<!-- ============================================= -->
 <header class="top-nav">
+
+  <!-- =============================== -->
+  <!-- BARRA DE PESQUISA -->
+  <!-- =============================== -->
   <div class="search-bar">
     <span class="search-icon">🔍</span>
     <input
       type="text"
-      placeholder="Pesquisar..."
+      placeholder="Pesquisar clientes, imóveis, contratos..."
       [(ngModel)]="searchTerm"
       (input)="onSearch()"
+      class="search-input"
     >
   </div>
 
+  <!-- =============================== -->
+  <!-- INFORMAÇÕES DO USUÁRIO -->
+  <!-- =============================== -->
   <div class="user-info">
+
+    <!-- Detalhes do Usuário -->
     <div class="user-details">
       <span class="user-name">{{ userName }}</span>
       <span class="user-role">{{ userRole }}</span>
     </div>
 
+    <!-- Ações do Usuário -->
     <div class="user-actions">
-      <button class="notification-btn" (click)="toggleNotifications()">
+
+      <!-- Botão de Notificações -->
+      <button
+        class="notification-btn"
+        (click)="toggleNotifications()"
+        title="Notificações"
+      >
         <span class="notification-icon">🔔</span>
         <span *ngIf="unreadNotifications > 0" class="notification-badge">
           {{ unreadNotifications }}
         </span>
       </button>
 
-      <div class="user-avatar" (click)="toggleUserMenu()">
+      <!-- Avatar do Usuário -->
+      <div
+        class="user-avatar"
+        (click)="toggleUserMenu()"
+        title="Menu do usuário"
+      >
         {{ userInitials }}
       </div>
 
+      <!-- =============================== -->
+      <!-- MENU DO USUÁRIO (DROPDOWN) -->
+      <!-- =============================== -->
       <div *ngIf="showUserMenu" class="user-menu">
-        <div class="menu-item" (click)="navigateToProfile()">
-          <span>👤</span> Meu Perfil
-        </div>
-        <div class="menu-item" (click)="openSettings()">
-          <span>⚙️</span> Configurações
-        </div>
-        <div class="menu-divider"></div>
-        <div class="menu-item logout" (click)="logout()">
-          <span>🚪</span> Sair
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Notifications Panel -->
+        <!-- Informações do Usuário no Menu -->
+        <div class="user-menu-header">
+          <div class="user-menu-avatar">{{ userInitials }}</div>
+          <div class="user-menu-info">
+            <div class="user-menu-name">{{ userName }}</div>
+            <div class="user-menu-email" *ngIf="usuario">{{ usuario.email }}</div>
+            <div class="user-menu-role">{{ userRole }}</div>
+          </div>
+        </div>
+
+        <div class="menu-divider"></div>
+
+        <!-- Item: Meu Perfil -->
+        <div class="menu-item" (click)="navigateToProfile()">
+          <span class="menu-item-icon">👤</span>
+          <span class="menu-item-text">Meu Perfil</span>
+        </div>
+
+        <!-- Item: Configurações -->
+        <div class="menu-item" (click)="openSettings()">
+          <span class="menu-item-icon">⚙️</span>
+          <span class="menu-item-text">Configurações</span>
+        </div>
+
+        <!-- Separador -->
+        <div class="menu-divider"></div>
+
+        <!-- Item: Sair -->
+        <div class="menu-item logout" (click)="logout()">
+          <span class="menu-item-icon">🚪</span>
+          <span class="menu-item-text">Sair</span>
+        </div>
+
+      </div>
+      <!-- FIM MENU DO USUÁRIO -->
+
+    </div>
+    <!-- FIM AÇÕES DO USUÁRIO -->
+
+  </div>
+  <!-- FIM INFORMAÇÕES DO USUÁRIO -->
+
+  <!-- =============================== -->
+  <!-- PAINEL DE NOTIFICAÇÕES -->
+  <!-- =============================== -->
   <div *ngIf="showNotifications" class="notifications-panel">
+
+    <!-- Cabeçalho do Painel -->
     <div class="notifications-header">
       <h3>Notificações</h3>
-      <button class="close-btn" (click)="toggleNotifications()">×</button>
+      <button
+        class="close-btn"
+        (click)="toggleNotifications()"
+        title="Fechar notificações"
+      >
+        ×
+      </button>
     </div>
+
+    <!-- Lista de Notificações -->
     <div class="notifications-list">
-      <div *ngFor="let notification of notifications"
-           class="notification-item"
-           [class.unread]="!notification.read">
+
+      <!-- Notificação 1 -->
+      <div class="notification-item">
         <div class="notification-icon">📋</div>
         <div class="notification-content">
-          <p class="notification-text">{{ notification.text }}</p>
-          <span class="notification-time">{{ notification.time }}</span>
+          <p class="notification-text">Novo contrato criado para Apartamento Centro</p>
+          <span class="notification-time">5 min atrás</span>
         </div>
       </div>
+
+      <!-- Notificação 2 -->
+      <div class="notification-item">
+        <div class="notification-icon">📅</div>
+        <div class="notification-content">
+          <p class="notification-text">Visita agendada para Casa Jardins amanhã</p>
+          <span class="notification-time">1 hora atrás</span>
+        </div>
+      </div>
+
+      <!-- Notificação 3 -->
+      <div class="notification-item">
+        <div class="notification-icon">💰</div>
+        <div class="notification-content">
+          <p class="notification-text">Pagamento recebido de Maria Silva</p>
+          <span class="notification-time">2 horas atrás</span>
+        </div>
+      </div>
+
+      <!-- Notificação 4 -->
+      <div class="notification-item">
+        <div class="notification-icon">👥</div>
+        <div class="notification-content">
+          <p class="notification-text">Novo cliente cadastrado no sistema</p>
+          <span class="notification-time">1 dia atrás</span>
+        </div>
+      </div>
+
     </div>
+    <!-- FIM LISTA DE NOTIFICAÇÕES -->
+
+    <!-- Rodapé do Painel -->
+    <div class="notifications-footer">
+      <button class="view-all-btn">Ver todas as notificações</button>
+    </div>
+
   </div>
+  <!-- FIM PAINEL DE NOTIFICAÇÕES -->
+
 </header>
+<!-- FIM HEADER -->

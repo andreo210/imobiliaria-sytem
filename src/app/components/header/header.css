@@ -1,61 +1,85 @@
+/* ============================================= */
+/* ESTILOS DO HEADER / CABEÇALHO */
+/* ============================================= */
+
 .top-nav {
   background-color: #ffffff;
   padding: 15px 30px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 1000;
+  border-bottom: 1px solid #e9ecef;
 }
 
+/* =============================== */
+/* BARRA DE PESQUISA */
+/* =============================== */
 .search-bar {
   display: flex;
   align-items: center;
-  background-color: #ecf0f1;
-  border-radius: 20px;
-  padding: 8px 15px;
-  width: 300px;
+  background-color: #f8f9fa;
+  border-radius: 25px;
+  padding: 10px 20px;
+  width: 400px;
   transition: all 0.3s ease;
+  border: 2px solid transparent;
 
   &:focus-within {
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    background-color: #ffffff;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
   }
 }
 
 .search-icon {
-  margin-right: 8px;
-  color: #95a5a6;
+  margin-right: 10px;
+  color: #6c757d;
+  font-size: 1.1rem;
 }
 
-.search-bar input {
+.search-input {
   border: none;
   background: transparent;
   outline: none;
   width: 100%;
-  font-size: 14px;
+  font-size: 0.95rem;
+  color: #2c3e50;
+
+  &::placeholder {
+    color: #6c757d;
+  }
 }
 
+/* =============================== */
+/* INFORMAÇÕES DO USUÁRIO */
+/* =============================== */
 .user-info {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
 }
 
 .user-details {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-}
 
-.user-name {
-  font-weight: 600;
-  font-size: 14px;
-}
+  .user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    margin-bottom: 2px;
+  }
 
-.user-role {
-  font-size: 12px;
-  color: #95a5a6;
+  .user-role {
+    font-size: 0.8rem;
+    color: #6c757d;
+    text-transform: capitalize;
+  }
 }
 
 .user-actions {
@@ -65,6 +89,9 @@
   position: relative;
 }
 
+/* =============================== */
+/* BOTÃO DE NOTIFICAÇÕES */
+/* =============================== */
 .notification-btn {
   position: relative;
   background: none;
@@ -72,158 +99,333 @@
   cursor: pointer;
   padding: 8px;
   border-radius: 50%;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
 
   &:hover {
     background-color: #f8f9fa;
+    transform: scale(1.05);
+  }
+
+  .notification-icon {
+    font-size: 1.2rem;
+    color: #6c757d;
   }
 }
 
 .notification-badge {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 2px;
+  right: 2px;
   background-color: #e74c3c;
   color: white;
   border-radius: 50%;
   width: 18px;
   height: 18px;
-  font-size: 10px;
+  font-size: 0.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 600;
+  border: 2px solid white;
 }
 
+/* =============================== */
+/* AVATAR DO USUÁRIO */
+/* =============================== */
 .user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background-color: #3498db;
+  background: linear-gradient(135deg, #3498db, #2980b9);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
 
   &:hover {
     transform: scale(1.05);
+    border-color: rgba(52, 152, 219, 0.2);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
   }
 }
 
+/* =============================== */
+/* MENU DO USUÁRIO (DROPDOWN) */
+/* =============================== */
 .user-menu {
   position: absolute;
-  top: 50px;
+  top: 55px;
   right: 0;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  min-width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  min-width: 280px;
   z-index: 1001;
+  border: 1px solid #e9ecef;
+  animation: slideDown 0.2s ease-out;
 }
 
-.menu-item {
-  padding: 12px 15px;
+.user-menu-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  font-size: 14px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px 12px 0 0;
 
-  &:hover {
-    background-color: #f8f9fa;
+  .user-menu-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-right: 15px;
   }
 
-  &.logout {
-    color: #e74c3c;
+  .user-menu-info {
+    flex: 1;
+
+    .user-menu-name {
+      font-weight: 700;
+      color: #2c3e50;
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .user-menu-email {
+      color: #6c757d;
+      font-size: 0.8rem;
+      margin-bottom: 2px;
+    }
+
+    .user-menu-role {
+      color: #3498db;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
   }
 }
 
 .menu-divider {
   height: 1px;
-  background-color: #ecf0f1;
+  background: #e9ecef;
   margin: 5px 0;
 }
 
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    background-color: #f8f9fa;
+    border-left-color: #3498db;
+
+    .menu-item-icon {
+      transform: scale(1.1);
+    }
+
+    .menu-item-text {
+      color: #3498db;
+    }
+  }
+
+  &.logout {
+    &:hover {
+      background-color: #f8d7da;
+      border-left-color: #e74c3c;
+
+      .menu-item-text {
+        color: #e74c3c;
+      }
+    }
+  }
+
+  .menu-item-icon {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+    width: 20px;
+    text-align: center;
+  }
+
+  .menu-item-text {
+    font-size: 0.9rem;
+    color: #2c3e50;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+}
+
+/* =============================== */
+/* PAINEL DE NOTIFICAÇÕES */
+/* =============================== */
 .notifications-panel {
   position: absolute;
-  top: 70px;
-  right: 120px;
+  top: 55px;
+  right: 70px;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  width: 350px;
-  max-height: 400px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  width: 380px;
+  max-height: 500px;
   z-index: 1001;
+  border: 1px solid #e9ecef;
+  animation: slideDown 0.2s ease-out;
+  display: flex;
+  flex-direction: column;
 }
 
 .notifications-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid #ecf0f1;
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
 
   h3 {
     margin: 0;
-    font-size: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c3e50;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6c757d;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #f8f9fa;
+      color: #e74c3c;
+    }
   }
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #95a5a6;
-}
-
 .notifications-list {
-  max-height: 300px;
+  flex: 1;
   overflow-y: auto;
+  max-height: 350px;
 }
 
 .notification-item {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 12px 15px;
+  gap: 12px;
+  padding: 15px 20px;
   border-bottom: 1px solid #f8f9fa;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     background-color: #f8f9fa;
   }
 
-  &.unread {
-    background-color: rgba(52, 152, 219, 0.05);
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .notification-icon {
+    font-size: 1.1rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .notification-content {
+    flex: 1;
+
+    .notification-text {
+      margin: 0 0 6px 0;
+      font-size: 0.9rem;
+      color: #2c3e50;
+      line-height: 1.4;
+    }
+
+    .notification-time {
+      font-size: 0.75rem;
+      color: #6c757d;
+    }
   }
 }
 
-.notification-content {
-  flex: 1;
+.notifications-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #e9ecef;
+  text-align: center;
+
+  .view-all-btn {
+    background: none;
+    border: none;
+    color: #3498db;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #e3f2fd;
+    }
+  }
 }
 
-.notification-text {
-  margin: 0 0 5px 0;
-  font-size: 13px;
-  line-height: 1.4;
+/* =============================== */
+/* ANIMAÇÕES */
+/* =============================== */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.notification-time {
-  font-size: 11px;
-  color: #95a5a6;
-}
-
+/* =============================== */
+/* RESPONSIVIDADE */
+/* =============================== */
 @media (max-width: 768px) {
   .top-nav {
-    padding: 15px 20px;
+    padding: 12px 20px;
   }
 
   .search-bar {
     width: 200px;
+
+    .search-input::placeholder {
+      font-size: 0.8rem;
+    }
   }
 
   .user-details {
@@ -233,5 +435,31 @@
   .notifications-panel {
     right: 20px;
     width: calc(100vw - 40px);
+  }
+
+  .user-menu {
+    right: -10px;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar {
+    width: 150px;
+  }
+
+  .user-actions {
+    gap: 10px;
+  }
+
+  .notification-btn {
+    width: 35px;
+    height: 35px;
+  }
+
+  .user-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 0.8rem;
   }
 }

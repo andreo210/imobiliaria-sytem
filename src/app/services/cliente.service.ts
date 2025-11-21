@@ -31,4 +31,5 @@ export class ClienteService {
   excluirCliente(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
 }

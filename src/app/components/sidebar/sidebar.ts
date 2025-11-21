@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 interface MenuItem {
   icon: string;
@@ -9,12 +10,14 @@ interface MenuItem {
   active: boolean;
   expanded?: boolean;
   children?: SubMenuItem[];
+  requiredRole?: 'admin' | 'corretor' | 'usuario';
 }
 
 interface SubMenuItem {
   label: string;
   route: string;
   active: boolean;
+  requiredRole?: 'admin' | 'corretor' | 'usuario';
 }
 
 @Component({
@@ -24,7 +27,7 @@ interface SubMenuItem {
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.css']
 })
-export class Sidebar {
+export class Sidebar implements OnInit {
   menuItems: MenuItem[] = [
     {
       icon: '📊',
@@ -44,7 +47,7 @@ export class Sidebar {
       active: false,
       expanded: false,
       children: [
-        { label: 'Exibir Todos', route: '/clientes', active: false },
+        { label: 'Listar Clientes', route: '/clientes', active: false },
         { label: 'Novo Cliente', route: '/clientes/new', active: false }
       ]
     },
@@ -67,10 +70,15 @@ export class Sidebar {
       active: false
     },
     {
-      icon: '👨‍💼',
+      icon: '👥',
       label: 'Usuários',
-      route: '/users',
-      active: false
+      active: false,
+      expanded: false,
+      requiredRole: 'admin',
+      children: [
+        { label: 'Listar Usuários', route: '/usuarios', active: false, requiredRole: 'admin' },
+        { label: 'Novo Usuário', route: '/usuarios/novo', active: false, requiredRole: 'admin' }
+      ]
     },
     {
       icon: '⚙️',
@@ -80,16 +88,56 @@ export class Sidebar {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.updateActiveState();
+
+    this.router.events.subscribe(() => {
+      this.updateActiveState();
+    });
+  }
+
+  updateActiveState() {
+    const currentUrl = this.router.url;
+
+    this.menuItems.forEach(item => {
+      item.active = item.route === currentUrl;
+
+      if (item.children) {
+        const hasActiveChild = item.children.some(child => {
+          const isActive = child.route === currentUrl;
+          if (isActive) {
+            child.active = true;
+          }
+          return isActive;
+        });
+
+        if (hasActiveChild) {
+          item.active = true;
+          item.expanded = true;
+        }
+      }
+    });
+  }
+
+  hasActiveChild(children: SubMenuItem[]): boolean {
+    return children.some(child => this.router.url === child.route);
+  }
 
   navigateTo(route: string, item: MenuItem) {
-    // Se for um item sem filhos, navega diretamente
+    if (item.requiredRole && !this.hasPermission(item.requiredRole)) {
+      return;
+    }
+
     if (!item.children) {
-      this.menuItems.forEach(menu => menu.active = false);
+      this.closeAllMenus();
       item.active = true;
       this.router.navigate([route]);
     } else {
-      // Se for um item com filhos, apenas expande/contrai
       this.toggleSubmenu(item);
     }
   }
@@ -97,15 +145,11 @@ export class Sidebar {
   navigateToSubmenu(parentItem: MenuItem, subItem: SubMenuItem, event: Event) {
     event.stopPropagation();
 
-    // Fecha todos os menus
-    this.menuItems.forEach(menu => {
-      menu.active = false;
-      if (menu.children) {
-        menu.children.forEach(child => child.active = false);
-      }
-    });
+    if (subItem.requiredRole && !this.hasPermission(subItem.requiredRole)) {
+      return;
+    }
 
-    // Ativa o pai e o item filho
+    this.closeAllMenus();
     parentItem.active = true;
     parentItem.expanded = true;
     subItem.active = true;
@@ -114,23 +158,52 @@ export class Sidebar {
   }
 
   toggleSubmenu(item: MenuItem) {
-    // Fecha outros submenus abertos
+    console.log('Abrindo/fechando submenu:', item.label);
+    item.expanded = !item.expanded;
+
+    if (item.expanded) {
+      this.menuItems.forEach(menu => {
+        if (menu !== item && menu.children) {
+          menu.expanded = false;
+        }
+      });
+    }
+  }
+
+  closeAllMenus() {
     this.menuItems.forEach(menu => {
-      if (menu !== item && menu.children) {
-        menu.expanded = false;
+      menu.active = false;
+      if (menu.children) {
+        menu.children.forEach(child => child.active = false);
       }
     });
-
-    // Alterna o estado do submenu atual
-    item.expanded = !item.expanded;
   }
 
-  isActive(route: string): boolean {
-    return this.router.url === route;
+  hasPermission(requiredRole: string): boolean {
+    if (requiredRole === 'admin') {
+      return this.authService.isAdmin();
+    }
+    return true;
   }
 
-  // Verifica se algum subitem está ativo
-  hasActiveChild(children: SubMenuItem[]): boolean {
-    return children.some(child => this.router.url === child.route);
+  shouldShowItem(item: MenuItem): boolean {
+    if (item.requiredRole) {
+      return this.hasPermission(item.requiredRole);
+    }
+
+    if (item.children) {
+      return item.children.some(child =>
+        !child.requiredRole || this.hasPermission(child.requiredRole)
+      );
+    }
+
+    return true;
+  }
+
+  shouldShowSubitem(subItem: SubMenuItem): boolean {
+    if (subItem.requiredRole) {
+      return this.hasPermission(subItem.requiredRole);
+    }
+    return true;
   }
 }

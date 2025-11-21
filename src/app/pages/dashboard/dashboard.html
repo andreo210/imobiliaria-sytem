@@ -100,13 +100,13 @@
             <h3 class="card-title">Ações Rápidas</h3>
           </div>
           <div class="card-content quick-actions">
+            <button routerLink="/clientes/new" class="quick-action-btn">
+              <span class="action-icon">👥</span>
+              <span class="action-text">Novo Cliente</span>
+            </button>
             <button routerLink="/properties/new" class="quick-action-btn">
               <span class="action-icon">🏠</span>
               <span class="action-text">Novo Imóvel</span>
-            </button>
-            <button routerLink="/clients/new" class="quick-action-btn">
-              <span class="action-icon">👥</span>
-              <span class="action-text">Novo Cliente</span>
             </button>
             <button routerLink="/contracts/new" class="quick-action-btn">
               <span class="action-icon">📝</span>
@@ -115,6 +115,36 @@
             <button routerLink="/visits/new" class="quick-action-btn">
               <span class="action-icon">📅</span>
               <span class="action-text">Nova Visita</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- =============================== -->
+        <!-- SEÇÃO DE ADMINISTRAÇÃO -->
+        <!-- =============================== -->
+        <div *ngIf="authService.isAdmin()" class="card admin-section">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="admin-icon">⚙️</span>
+              Administração
+            </h3>
+          </div>
+          <div class="card-content quick-actions">
+            <button routerLink="/usuarios/novo" class="quick-action-btn admin-btn">
+              <span class="action-icon">👥</span>
+              <span class="action-text">Novo Usuário</span>
+            </button>
+            <button routerLink="/usuarios" class="quick-action-btn admin-btn">
+              <span class="action-icon">📋</span>
+              <span class="action-text">Gerenciar Usuários</span>
+            </button>
+            <button class="quick-action-btn admin-btn">
+              <span class="action-icon">📊</span>
+              <span class="action-text">Relatórios</span>
+            </button>
+            <button class="quick-action-btn admin-btn">
+              <span class="action-icon">🔧</span>
+              <span class="action-text">Configurações</span>
             </button>
           </div>
         </div>

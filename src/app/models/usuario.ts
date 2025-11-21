@@ -2,8 +2,10 @@ export interface Usuario {
   id: number;
   nome: string;
   email: string;
-  papel: 'admin' | 'corretor';
-  criado_em: Date;
+  senha: string;
+  papel: 'admin' | 'corretor' | 'usuario';
+  ativo: boolean;
+  criado_em: string;
 }
 
 export interface LoginRequest {

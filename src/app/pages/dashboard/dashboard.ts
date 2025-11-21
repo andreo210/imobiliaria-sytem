@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DashboardService, DashboardData, DashboardStats } from '../../services/dashboard.service';
+import { AuthService } from '../../services/auth.service'; // ← Importar o AuthService
 
 interface StatCard {
   icon: string;
@@ -24,7 +25,11 @@ export class DashboardComponent implements OnInit {
 
   statCards: StatCard[] = [];
 
-  constructor(private dashboardService: DashboardService) {}
+  // Tornar o authService público para usar no template
+  constructor(
+    private dashboardService: DashboardService,
+    public authService: AuthService // ← Tornar público com 'public'
+  ) {}
 
   ngOnInit() {
     this.loadDashboardData();

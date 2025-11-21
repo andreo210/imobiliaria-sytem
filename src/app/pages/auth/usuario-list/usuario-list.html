@@ -62,7 +62,7 @@
     <div class="card-header">
       <h3 class="card-title">
         <!-- Exibe o total de clientes cadastrados -->
-        Total de Clientes: {{ clientes.length }}
+        Total de Usuarios: {{ usuarios.length }}
       </h3>
     </div>
 
@@ -74,7 +74,7 @@
       <!-- =============================== -->
       <!-- Mostrado quando não há clientes cadastrados -->
       <!-- *ngIf: Só mostra se o array clientes estiver vazio -->
-      <div *ngIf="clientes.length === 0" class="empty-state">
+      <div *ngIf="usuarios.length === 0" class="empty-state">
         <!-- Ícone ilustrativo -->
         <div class="empty-icon">👥</div>
         <!-- Mensagem principal -->
@@ -93,7 +93,7 @@
       <!-- =============================== -->
       <!-- Mostrado quando existem clientes cadastrados -->
       <!-- *ngIf: Só mostra se o array clientes não estiver vazio -->
-      <div *ngIf="clientes.length > 0" class="table-container">
+      <div *ngIf="usuarios.length > 0" class="table-container">
 
         <!-- Tabela de dados -->
         <table class="data-table">
@@ -105,7 +105,6 @@
               <th>Nome</th>
               <th>Email</th>
               <th>Telefone</th>
-              <th>Data de Cadastro</th>
               <th>Ações</th> <!-- Coluna para botões de ação -->
             </tr>
           </thead>
@@ -115,26 +114,22 @@
           <tbody>
             <!-- Loop através da lista de clientes -->
             <!-- *ngFor: Cria uma linha para cada cliente no array -->
-            <tr *ngFor="let cliente of clientes">
+            <tr *ngFor="let user of usuarios">
 
               <!-- Célula do Nome com link para visualização -->
               <td class="client-name">
                 <!-- Link que navega para a página de visualização do cliente -->
                 <!-- [routerLink]: Link dinâmico com o ID do cliente -->
-                <a [routerLink]="['/clientes/view', cliente.id]" class="client-link">
-                  <strong>{{ cliente.nome }}</strong>
+                <a [routerLink]="['/usuario/view', user.id]" class="client-link">
+                  <strong>{{ user.nome }}</strong>
                 </a>
               </td>
 
               <!-- Célula do Email -->
-              <td>{{ cliente.email }}</td>
+              <td>{{ user.email }}</td>
 
-              <!-- Célula do Telefone -->
-              <td>{{ cliente.telefone }}</td>
-
-              <!-- Célula da Data de Cadastro -->
-              <!-- Formata a data usando a função formatarData do componente -->
-              <td>{{ formatarData(cliente.criado_em!) }}</td>
+              <!-- Célula do papel -->
+              <td>{{ user.papel }}</td>
 
               <!-- Célula de Ações -->
               <td class="actions">
@@ -142,7 +137,7 @@
                 <!-- Botão Editar -->
                 <!-- (click): Chama a função editarCliente passando o cliente -->
                 <button
-                  (click)="editarCliente(cliente)"
+                  (click)="editarUsuario(user)"
                   class="btn-action btn-edit"
                   title="Editar"
                 >
@@ -152,12 +147,13 @@
                 <!-- Botão Excluir -->
                 <!-- (click): Chama a função excluirCliente passando o cliente -->
                 <button
-                  (click)="excluirCliente(cliente)"
+                  (click)="excluirUsuario(user)"
                   class="btn-action btn-delete"
                   title="Excluir"
                 >
                   🗑️
                 </button>
+
 
               </td>
               <!-- FIM CÉLULA AÇÕES -->
