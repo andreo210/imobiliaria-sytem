@@ -62,6 +62,15 @@ export const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard]
   },
 
+  { path: 'imoveis/novo',
+    loadComponent: () => import('./pages/imovel/imovel-form/imovel-form').then(m => m.ImovelFormComponent),
+    canActivate: [AuthGuard]
+  },
+  { path: 'imoveis/editar/:id',
+    loadComponent: () => import('./pages/imovel/imovel-form/imovel-form').then(m => m.ImovelFormComponent),
+    canActivate: [AuthGuard]
+  },
+
   // Rota fallback - APENAS UMA
   { path: '**', redirectTo: '/dashboard' }
 ];

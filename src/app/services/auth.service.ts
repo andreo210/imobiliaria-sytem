@@ -75,6 +75,7 @@ export class AuthService {
       );
   }
 
+
   /**
    * Renova os tokens usando refresh token
    */
@@ -349,6 +350,9 @@ export class AuthService {
 }
 
 
+getCurrentUser(): Usuario | null {
+  return this.usuarioAtual.value;
+}
   // =============================== //
   // MÉTODOS DE DEBUG
   // =============================== //

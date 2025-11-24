@@ -1,0 +1,219 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Cadastrar Imóvel</h1>
+    <button class="btn-back" routerLink="/imoveis">
+      ← Voltar para Lista
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <div class="loading-spinner-large"></div>
+      <p>Carregando dados...</p>
+    </div>
+  }
+
+  @if (!loading) {
+    <form [formGroup]="imovelForm" (ngSubmit)="onSubmit()" class="imovel-form">
+
+      <!-- Seção: Informações Básicas -->
+      <div class="form-section">
+        <h2 class="section-title">Informações Básicas</h2>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="titulo">Título do Imóvel *</label>
+            <input
+              type="text"
+              id="titulo"
+              formControlName="titulo"
+              placeholder="Ex: Apartamento mobiliado frente ao mar"
+              class="form-input"
+              [class.error]="titulo?.invalid && titulo?.touched"
+            >
+            @if (titulo?.invalid && titulo?.touched) {
+              <div class="error-message">
+                @if (titulo?.errors?.['required']) {
+                  <span>Título é obrigatório</span>
+                }
+                @if (titulo?.errors?.['minlength']) {
+                  <span>Mínimo 5 caracteres</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="descricao">Descrição *</label>
+            <textarea
+              id="descricao"
+              formControlName="descricao"
+              placeholder="Descreva o imóvel em detalhes..."
+              rows="4"
+              class="form-textarea"
+              [class.error]="descricao?.invalid && descricao?.touched"
+            ></textarea>
+            @if (descricao?.invalid && descricao?.touched) {
+              <div class="error-message">
+                @if (descricao?.errors?.['required']) {
+                  <span>Descrição é obrigatória</span>
+                }
+                @if (descricao?.errors?.['minlength']) {
+                  <span>Mínimo 10 caracteres</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="preco">Preço (R$) *</label>
+            <input
+              type="number"
+              id="preco"
+              formControlName="preco"
+              placeholder="0,00"
+              min="0"
+              step="0.01"
+              class="form-input"
+              [class.error]="preco?.invalid && preco?.touched"
+            >
+            @if (preco?.invalid && preco?.touched) {
+              <div class="error-message">
+                @if (preco?.errors?.['required']) {
+                  <span>Preço é obrigatório</span>
+                }
+                @if (preco?.errors?.['min']) {
+                  <span>Preço deve ser maior que zero</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="tipo_id">Tipo do Imóvel *</label>
+            <select
+              id="tipo_id"
+              formControlName="tipo_id"
+              class="form-select"
+              [class.error]="tipo_id?.invalid && tipo_id?.touched"
+            >
+              <option value="">Selecione o tipo</option>
+              @for (tipo of tiposImovel; track tipo.id) {
+                <option [value]="tipo.id">{{ tipo.nome }}</option>
+              }
+            </select>
+            @if (tipo_id?.invalid && tipo_id?.touched) {
+              <div class="error-message">
+                Tipo do imóvel é obrigatório
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="status">Status *</label>
+            <select
+              id="status"
+              formControlName="status"
+              class="form-select"
+              [class.error]="status?.invalid && status?.touched"
+            >
+              <option value="">Selecione o status</option>
+              <option value="DISPONIVEL">Disponível</option>
+              <option value="ALUGADO">Alugado</option>
+              <option value="VENDIDO">Vendido</option>
+              <option value="INDISPONIVEL">Indisponível</option>
+            </select>
+            @if (status?.invalid && status?.touched) {
+              <div class="error-message">
+                Status é obrigatório
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção: Amenidades -->
+      <div class="form-section">
+        <h2 class="section-title">Amenidades</h2>
+        <p class="section-subtitle">Selecione as amenidades disponíveis no imóvel</p>
+
+        <div class="amenidades-grid">
+          @for (amenidade of amenidades; track amenidade.id) {
+            <div class="amenidade-item">
+              <label class="amenidade-checkbox">
+                <input
+                  type="checkbox"
+                  [value]="amenidade.id"
+                  (change)="onAmenidadeChange($event, amenidade.id)"
+                  [checked]="selectedAmenidades.includes(amenidade.id)"
+                >
+                <span class="checkmark"></span>
+                {{ amenidade.nome }}
+              </label>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Seção: Fotos do Imóvel -->
+      <div class="form-section">
+        <h2 class="section-title">Fotos do Imóvel</h2>
+
+        <div class="upload-area" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+          <div class="upload-content">
+            <span class="upload-icon">📷</span>
+            <h3>Arraste e solte as fotos aqui</h3>
+            <p>ou</p>
+            <input
+              type="file"
+              #fileInput
+              (change)="onFileSelected($event)"
+              multiple
+              accept="image/*"
+              class="file-input"
+            >
+            <button type="button" class="btn-secondary" (click)="fileInput.click()">
+              Selecionar Fotos
+            </button>
+          </div>
+        </div>
+
+        <!-- Preview das Fotos -->
+        @if (photoPreviews.length > 0) {
+          <div class="photos-preview">
+            <h4>Fotos Selecionadas ({{ photoPreviews.length }})</h4>
+            <div class="photos-grid">
+              @for (preview of photoPreviews; track $index; let i = $index) {
+                <div class="photo-item">
+                  <img [src]="preview" [alt]="'Foto ' + (i + 1)" class="photo-preview">
+                  <button type="button" class="remove-photo" (click)="removePhoto(i)">×</button>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Botões de Ação -->
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" routerLink="/imoveis">
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="imovelForm.invalid || isSubmitting"
+        >
+          @if (isSubmitting) {
+            <span class="loading-spinner"></span>
+          }
+          {{ isSubmitting ? 'Cadastrando...' : 'Cadastrar Imóvel' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

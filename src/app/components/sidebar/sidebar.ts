@@ -38,7 +38,7 @@ export class Sidebar implements OnInit {
     {
       icon: '🏠',
       label: 'Imóveis',
-      route: '/properties',
+      route: '/imoveis/novo',
       active: false
     },
     {

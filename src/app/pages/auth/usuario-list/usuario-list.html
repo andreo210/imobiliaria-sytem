@@ -9,18 +9,18 @@
   <div class="page-header">
     <div class="header-content">
       <!-- Título principal da página -->
-      <h1 class="page-title">Clientes</h1>
+      <h1 class="page-title">Usuários</h1>
       <!-- Subtítulo descritivo -->
-      <p class="page-subtitle">Gerencie todos os clientes do sistema</p>
+      <p class="page-subtitle">Gerencie todos os usuários do sistema</p>
     </div>
 
     <!-- Botão para criar novo cliente -->
     <!-- routerLink: Navega para o formulário de novo cliente -->
     <button
-      routerLink="/clientes/new"
+      routerLink="/usuarios/novo"
       class="btn btn-primary"
     >
-      + Novo Cliente
+      + Novo Usuario
     </button>
   </div>
   <!-- FIM CABEÇALHO -->
@@ -47,7 +47,7 @@
   <div *ngIf="loading" class="loading">
     <!-- Spinner de carregamento -->
     <div class="spinner"></div>
-    <p>Carregando clientes...</p>
+    <p>Carregando usuarios...</p>
   </div>
   <!-- FIM LOADING -->
 
@@ -82,8 +82,8 @@
         <!-- Instrução para o usuário -->
         <p>Comece cadastrando seu primeiro cliente no sistema.</p>
         <!-- Botão para cadastrar primeiro cliente -->
-        <button routerLink="/clientes/new" class="btn btn-primary">
-          Cadastrar Primeiro Cliente
+        <button routerLink="/usuarios/novo" class="btn btn-primary">
+          Cadastrar Primeiro Usuario
         </button>
       </div>
       <!-- FIM ESTADO VAZIO -->

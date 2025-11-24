@@ -6,8 +6,7 @@
   <!-- Cabeçalho -->
   <div class="page-header">
     <div class="header-content">
-      <h1 class="page-title">Cadastrar Novo Usuário</h1>
-      <p class="page-subtitle">Crie uma nova conta de usuário no sistema</p>
+      <h1 class="page-title">Conta do usuário</h1>
     </div>
     <button type="button" class="btn-back" (click)="voltarParaLista()">
       ← Voltar
@@ -34,7 +33,7 @@
   <!-- Loading -->
   <div *ngIf="loading" class="loading">
     <div class="spinner"></div>
-    <p>Cadastrando usuário...</p>
+    <p>salvando usuário...</p>
   </div>
 
   <!-- Formulário de Registro -->
@@ -141,7 +140,7 @@
         class="btn btn-primary"
         [disabled]="!isFormValid() || loading"
       >
-        Cadastrar Usuário
+        Salvar
       </button>
     </div>
   </form>
