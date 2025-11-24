@@ -1,0 +1,36 @@
+/* =============================== */
+/* SEÇÃO DE ADMINISTRAÇÃO */
+/* =============================== */
+.admin-section {
+  border-left: 4px solid #e74c3c;
+
+  .card-header {
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .admin-icon {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .admin-btn {
+    border: 2px solid rgba(231, 76, 60, 0.1);
+    background: rgba(231, 76, 60, 0.05);
+
+    &:hover {
+      border-color: #e74c3c;
+      background: rgba(231, 76, 60, 0.1);
+
+      .action-text {
+        color: #e74c3c;
+      }
+
+      .action-icon {
+        transform: scale(1.1);
+      }
+    }
+  }
+}

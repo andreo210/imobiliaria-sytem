@@ -1,0 +1,148 @@
+<!-- ============================================= -->
+<!-- PÁGINA DE REGISTRO DE USUÁRIO -->
+<!-- ============================================= -->
+<div class="registro-container">
+
+  <!-- Cabeçalho -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Conta do usuário</h1>
+    </div>
+    <button type="button" class="btn-back" (click)="voltarParaLista()">
+      ← Voltar
+    </button>
+  </div>
+
+  <!-- Mensagens de Feedback -->
+  <div *ngIf="error" class="alert alert-error">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-content">
+      <h4>Erro no cadastro</h4>
+      <p>{{ error }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="success" class="alert alert-success">
+    <div class="alert-icon">✅</div>
+    <div class="alert-content">
+      <h4>Sucesso!</h4>
+      <p>{{ success }}</p>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>salvando usuário...</p>
+  </div>
+
+  <!-- Formulário de Registro -->
+  <form *ngIf="!loading" (ngSubmit)="onSubmit()" class="registro-form">
+    <div class="form-grid">
+
+      <!-- Informações Pessoais -->
+      <div class="form-section">
+        <h3 class="section-title">Informações Pessoais</h3>
+
+        <div class="form-group">
+          <label for="nome" class="form-label">Nome Completo *</label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            [(ngModel)]="user.nome"
+            class="form-input"
+            placeholder="Digite o nome completo"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="user.email"
+            class="form-input"
+            placeholder="exemplo@email.com"
+            required
+          >
+        </div>
+      </div>
+
+      <!-- Configurações de Acesso -->
+      <div class="form-section">
+        <h3 class="section-title">Configurações de Acesso</h3>
+
+        <div class="form-group">
+          <label for="papel" class="form-label">Papel do Usuário *</label>
+          <select
+            id="papel"
+            name="papel"
+            [(ngModel)]="user.papel"
+            class="form-select"
+            required
+          >
+            <option *ngFor="let papel of papeis" [value]="papel.value">
+              {{ papel.label }}
+            </option>
+          </select>
+          <small class="form-help">
+            Defina o nível de acesso do usuário no sistema
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="senha" class="form-label">Senha *</label>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            [(ngModel)]="user.senha"
+            class="form-input"
+            placeholder="Mínimo 6 caracteres"
+            required
+            minlength="6"
+          >
+          <small class="form-help">
+            A senha deve ter pelo menos 6 caracteres
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmarSenha" class="form-label">Confirmar Senha *</label>
+          <input
+            type="password"
+            id="confirmarSenha"
+            name="confirmarSenha"
+            [(ngModel)]="confirmarSenha"
+            class="form-input"
+            placeholder="Digite a senha novamente"
+            required
+          >
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Ações do Formulário -->
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="voltarParaLista()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!isFormValid() || loading"
+      >
+        Salvar
+      </button>
+    </div>
+  </form>
+
+</div>

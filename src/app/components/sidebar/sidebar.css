@@ -1,0 +1,156 @@
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+  color: #ffffff;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.sidebar-menu {
+  padding: 16px 0;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item.active {
+  background: rgba(52, 152, 219, 0.8);
+}
+
+.menu-main-item {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-left: 4px solid transparent;
+}
+
+.menu-main-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.menu-item.active > .menu-main-item {
+  border-left-color: #2980b9;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.menu-icon {
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+}
+
+.menu-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.menu-arrow {
+  font-size: 10px;
+  color: #bdc3c7;
+  transition: transform 0.2s;
+}
+
+.menu-item.expanded .menu-arrow {
+  transform: rotate(90deg);
+}
+
+.submenu {
+  background: rgba(0, 0, 0, 0.2);
+  border-left: 4px solid #3498db;
+  animation: slideDown 0.2s ease-out;
+}
+
+.submenu-item {
+  padding: 12px 20px 12px 48px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submenu-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.submenu-item.active {
+  background: rgba(52, 152, 219, 0.2);
+}
+
+.submenu-item.active .submenu-text {
+  color: #3498db;
+  font-weight: 600;
+}
+
+.submenu-icon {
+  margin-right: 10px;
+  color: #7f8c8d;
+}
+
+.submenu-text {
+  font-size: 13px;
+  color: #ecf0f1;
+  transition: color 0.2s;
+}
+
+.submenu-item:hover .submenu-text {
+  color: #3498db;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .sidebar-header h2,
+  .menu-text,
+  .menu-arrow,
+  .submenu {
+    display: none;
+  }
+
+  .menu-icon {
+    margin-right: 0;
+    font-size: 1.2rem;
+  }
+
+  .menu-main-item {
+    justify-content: center;
+    padding: 16px 0;
+  }
+}

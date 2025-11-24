@@ -1,0 +1,173 @@
+<!-- ============================================= -->
+<!-- CONTAINER PRINCIPAL DA LISTA DE CLIENTES -->
+<!-- ============================================= -->
+<div class="cliente-list">
+
+  <!-- =============================== -->
+  <!-- CABEÇALHO DA PÁGINA -->
+  <!-- =============================== -->
+  <div class="page-header">
+    <div class="header-content">
+      <!-- Título principal da página -->
+      <h1 class="page-title">Usuários</h1>
+      <!-- Subtítulo descritivo -->
+      <p class="page-subtitle">Gerencie todos os usuários do sistema</p>
+    </div>
+
+    <!-- Botão para criar novo cliente -->
+    <!-- routerLink: Navega para o formulário de novo cliente -->
+    <button
+      routerLink="/usuarios/novo"
+      class="btn btn-primary"
+    >
+      + Novo Usuario
+    </button>
+  </div>
+  <!-- FIM CABEÇALHO -->
+
+  <!-- =============================== -->
+  <!-- MENSAGEM DE SUCESSO -->
+  <!-- =============================== -->
+  <!-- Exibida após ações como criar/editar/excluir cliente -->
+  <!-- *ngIf: Só mostra se existir uma mensagem de sucesso -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    <div class="alert-icon">✅</div>
+    <div class="alert-content">
+      <!-- Exibe a mensagem vinda do query parameter -->
+      {{ successMessage }}
+    </div>
+  </div>
+  <!-- FIM MENSAGEM DE SUCESSO -->
+
+  <!-- =============================== -->
+  <!-- LOADING / CARREGAMENTO -->
+  <!-- =============================== -->
+  <!-- Exibido enquanto os dados estão sendo carregados da API -->
+  <!-- *ngIf: Só mostra quando loading = true -->
+  <div *ngIf="loading" class="loading">
+    <!-- Spinner de carregamento -->
+    <div class="spinner"></div>
+    <p>Carregando usuarios...</p>
+  </div>
+  <!-- FIM LOADING -->
+
+  <!-- =============================== -->
+  <!-- LISTA DE CLIENTES -->
+  <!-- =============================== -->
+  <!-- Container principal da lista -->
+  <!-- *ngIf: Só mostra quando não está carregando -->
+  <div *ngIf="!loading" class="card">
+
+    <!-- Cabeçalho do card -->
+    <div class="card-header">
+      <h3 class="card-title">
+        <!-- Exibe o total de clientes cadastrados -->
+        Total de Usuarios: {{ usuarios.length }}
+      </h3>
+    </div>
+
+    <!-- Conteúdo do card -->
+    <div class="card-content">
+
+      <!-- =============================== -->
+      <!-- ESTADO VAZIO -->
+      <!-- =============================== -->
+      <!-- Mostrado quando não há clientes cadastrados -->
+      <!-- *ngIf: Só mostra se o array clientes estiver vazio -->
+      <div *ngIf="usuarios.length === 0" class="empty-state">
+        <!-- Ícone ilustrativo -->
+        <div class="empty-icon">👥</div>
+        <!-- Mensagem principal -->
+        <h3>Nenhum cliente cadastrado</h3>
+        <!-- Instrução para o usuário -->
+        <p>Comece cadastrando seu primeiro cliente no sistema.</p>
+        <!-- Botão para cadastrar primeiro cliente -->
+        <button routerLink="/usuarios/novo" class="btn btn-primary">
+          Cadastrar Primeiro Usuario
+        </button>
+      </div>
+      <!-- FIM ESTADO VAZIO -->
+
+      <!-- =============================== -->
+      <!-- TABELA DE CLIENTES -->
+      <!-- =============================== -->
+      <!-- Mostrado quando existem clientes cadastrados -->
+      <!-- *ngIf: Só mostra se o array clientes não estiver vazio -->
+      <div *ngIf="usuarios.length > 0" class="table-container">
+
+        <!-- Tabela de dados -->
+        <table class="data-table">
+
+          <!-- Cabeçalho da tabela -->
+          <thead>
+            <tr>
+              <!-- Colunas da tabela -->
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>Ações</th> <!-- Coluna para botões de ação -->
+            </tr>
+          </thead>
+          <!-- FIM CABEÇALHO -->
+
+          <!-- Corpo da tabela -->
+          <tbody>
+            <!-- Loop através da lista de clientes -->
+            <!-- *ngFor: Cria uma linha para cada cliente no array -->
+            <tr *ngFor="let user of usuarios">
+
+              <!-- Célula do Nome com link para visualização -->
+              <td class="client-name">
+                <!-- Link que navega para a página de visualização do cliente -->
+                <!-- [routerLink]: Link dinâmico com o ID do cliente -->
+                <a [routerLink]="['/usuario/view', user.id]" class="client-link">
+                  <strong>{{ user.nome }}</strong>
+                </a>
+              </td>
+
+              <!-- Célula do Email -->
+              <td>{{ user.email }}</td>
+
+              <!-- Célula do papel -->
+              <td>{{ user.papel }}</td>
+
+              <!-- Célula de Ações -->
+              <td class="actions">
+
+                <!-- Botão Editar -->
+                <!-- (click): Chama a função editarCliente passando o cliente -->
+                <button
+                  (click)="editarUsuario(user)"
+                  class="btn-action btn-edit"
+                  title="Editar"
+                >
+                  ✏️
+                </button>
+
+                <!-- Botão Excluir -->
+                <!-- (click): Chama a função excluirCliente passando o cliente -->
+                <button
+                  (click)="excluirUsuario(user)"
+                  class="btn-action btn-delete"
+                  title="Excluir"
+                >
+                  🗑️
+                </button>
+
+
+              </td>
+              <!-- FIM CÉLULA AÇÕES -->
+            </tr>
+            <!-- FIM LOOP CLIENTES -->
+          </tbody>
+          <!-- FIM CORPO DA TABELA -->
+        </table>
+        <!-- FIM TABELA -->
+      </div>
+      <!-- FIM TABELA DE CLIENTES -->
+    </div>
+    <!-- FIM CONTEÚDO DO CARD -->
+  </div>
+  <!-- FIM LISTA DE CLIENTES -->
+</div>
+<!-- FIM CONTAINER PRINCIPAL -->

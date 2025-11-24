@@ -1,0 +1,157 @@
+<div class="dashboard">
+  <!-- Cabeçalho -->
+  <div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Visão geral do seu negócio imobiliário</p>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando dados...</p>
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <div *ngIf="!loading && dashboardData" class="dashboard-content">
+
+    <!-- Cards de Estatísticas -->
+    <div class="stats-grid">
+      <div *ngFor="let card of statCards"
+           class="stat-card"
+           [class]="card.color">
+        <div class="stat-icon">{{ card.icon }}</div>
+        <div class="stat-value">{{ formatValue(card.value, card.format) }}</div>
+        <div class="stat-label">{{ card.label }}</div>
+      </div>
+    </div>
+
+    <!-- Grid Principal -->
+    <div class="main-grid">
+
+      <!-- Coluna Esquerda -->
+      <div class="left-column">
+
+        <!-- Imóveis Recentes -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Imóveis Recentes</h3>
+            <a routerLink="/properties" class="view-all">Ver todos</a>
+          </div>
+          <div class="card-content">
+            <div *ngFor="let property of dashboardData.recent_properties" class="list-item">
+              <div class="item-info">
+                <h4 class="item-title">{{ property.title }}</h4>
+                <p class="item-details">{{ formatValue(property.price, 'currency') }} • {{ property.type }}</p>
+              </div>
+              <span class="status-badge" [class]="property.status">
+                {{ property.status === 'active' ? 'Ativo' : 'Inativo' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contratos Recentes -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Contratos Recentes</h3>
+            <a routerLink="/contracts" class="view-all">Ver todos</a>
+          </div>
+          <div class="card-content">
+            <div *ngFor="let contract of dashboardData.recent_contracts" class="list-item">
+              <div class="item-info">
+                <h4 class="item-title">{{ contract.contract_number }}</h4>
+                <p class="item-details">{{ contract.client_name }} - {{ contract.property_title }}</p>
+                <small class="item-date">{{ formatDate(contract.created_at) }}</small>
+              </div>
+              <span class="status-badge" [class]="contract.status">
+                {{ contract.status === 'active' ? 'Ativo' : 'Inativo' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Coluna Direita -->
+      <div class="right-column">
+
+        <!-- Próximas Visitas -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Próximas Visitas</h3>
+            <a routerLink="/visits" class="view-all">Ver todas</a>
+          </div>
+          <div class="card-content">
+            <div *ngFor="let visit of dashboardData.upcoming_visits" class="list-item">
+              <div class="visit-icon">📅</div>
+              <div class="item-info">
+                <h4 class="item-title">{{ visit.property_title }}</h4>
+                <p class="item-details">{{ visit.client_name }}</p>
+                <small class="item-date">{{ formatDate(visit.date) }}</small>
+              </div>
+              <span class="status-badge scheduled">Agendada</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações Rápidas -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Ações Rápidas</h3>
+          </div>
+          <div class="card-content quick-actions">
+            <button routerLink="/clientes/new" class="quick-action-btn">
+              <span class="action-icon">👥</span>
+              <span class="action-text">Novo Cliente</span>
+            </button>
+            <button routerLink="/properties/new" class="quick-action-btn">
+              <span class="action-icon">🏠</span>
+              <span class="action-text">Novo Imóvel</span>
+            </button>
+            <button routerLink="/contracts/new" class="quick-action-btn">
+              <span class="action-icon">📝</span>
+              <span class="action-text">Novo Contrato</span>
+            </button>
+            <button routerLink="/visits/new" class="quick-action-btn">
+              <span class="action-icon">📅</span>
+              <span class="action-text">Nova Visita</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- =============================== -->
+        <!-- SEÇÃO DE ADMINISTRAÇÃO -->
+        <!-- =============================== -->
+        <div *ngIf="authService.isAdmin()" class="card admin-section">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="admin-icon">⚙️</span>
+              Administração
+            </h3>
+          </div>
+          <div class="card-content quick-actions">
+            <button routerLink="/usuarios/novo" class="quick-action-btn admin-btn">
+              <span class="action-icon">👥</span>
+              <span class="action-text">Novo Usuário</span>
+            </button>
+            <button routerLink="/usuarios" class="quick-action-btn admin-btn">
+              <span class="action-icon">📋</span>
+              <span class="action-text">Gerenciar Usuários</span>
+            </button>
+            <button class="quick-action-btn admin-btn">
+              <span class="action-icon">📊</span>
+              <span class="action-text">Relatórios</span>
+            </button>
+            <button class="quick-action-btn admin-btn">
+              <span class="action-icon">🔧</span>
+              <span class="action-text">Configurações</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

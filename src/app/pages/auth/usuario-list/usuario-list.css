@@ -1,0 +1,402 @@
+/* ============================================= */
+/* ESTILOS DA LISTA DE CLIENTES - COMPONENTE */
+/* ============================================= */
+
+/* Container principal da página de listagem */
+.cliente-list {
+  padding: 0; /* Remove padding padrão para controle total do espaçamento */
+}
+
+/* =============================== */
+/* LINK DO NOME DO CLIENTE */
+/* =============================== */
+.client-link {
+  color: #2c3e50; /* Cor escura para boa legibilidade */
+  text-decoration: none; /* Remove sublinhado padrão dos links */
+  font-weight: 600; /* Peso da fonte semi-negrito para destaque */
+
+  /* Efeito hover - quando o usuário passa o mouse */
+  &:hover {
+    color: #3498db; /* Azul principal do tema no hover */
+    text-decoration: underline; /* Adiciona sublinhado para indicar ação */
+  }
+}
+
+/* =============================== */
+/* CABEÇALHO DA PÁGINA */
+/* =============================== */
+.page-header {
+  display: flex; /* Layout flexbox para alinhamento horizontal */
+  justify-content: space-between; /* Espaço entre título e botão */
+  align-items: flex-start; /* Alinha itens no topo */
+  margin-bottom: 30px; /* Espaço abaixo do cabeçalho */
+  padding-bottom: 20px; /* Espaço interno na base */
+  border-bottom: 1px solid #e9ecef; /* Linha separadora sutil */
+
+  /* Container do conteúdo textual (título e subtítulo) */
+  .header-content {
+    flex: 1; /* Ocupa todo o espaço disponível */
+  }
+
+  /* Título principal da página */
+  .page-title {
+    font-size: 2rem; /* Tamanho grande para hierarquia visual */
+    font-weight: 700; /* Negrito para destaque */
+    color: #2c3e50; /* Cor escura do tema */
+    margin: 0 0 8px 0; /* Margem apenas abaixo do título */
+  }
+
+  /* Subtítulo descritivo */
+  .page-subtitle {
+    color: #7f8c8d; /* Cinza para texto secundário */
+    margin: 0; /* Remove margens padrão */
+    font-size: 1.1rem; /* Tamanho ligeiramente maior que o texto normal */
+  }
+
+  /* Estilos base para botões */
+  .btn {
+    padding: 12px 24px; /* Espaçamento interno confortável */
+    border: none; /* Remove borda padrão */
+    border-radius: 6px; /* Cantos levemente arredondados */
+    font-size: 0.9rem; /* Tamanho de fonte compacto */
+    font-weight: 600; /* Texto em negrito */
+    cursor: pointer; /* Cursor de pointer para indicar clicabilidade */
+    transition: all 0.2s; /* Transição suave para hover */
+    text-decoration: none; /* Remove sublinhado se usado em link */
+    display: inline-block; /* Permite padding e margin */
+    text-align: center; /* Centraliza texto */
+
+    /* Variante primária - ação principal */
+    &.btn-primary {
+      background: #3498db; /* Azul principal */
+      color: white; /* Texto branco para contraste */
+
+      /* Efeito hover */
+      &:hover {
+        background: #2980b9; /* Azul mais escuro no hover */
+      }
+    }
+  }
+}
+
+/* =============================== */
+/* ALERTAS E MENSAGENS DE FEEDBACK */
+/* =============================== */
+.alert {
+  display: flex; /* Layout flex para ícone e texto */
+  padding: 16px; /* Espaçamento interno */
+  border-radius: 8px; /* Cantos arredondados */
+  margin-bottom: 24px; /* Espaço abaixo do alerta */
+  align-items: center; /* Alinha ícone e texto verticalmente */
+
+  /* Variante de sucesso */
+  &.alert-success {
+    background: #d4edda; /* Verde muito claro de fundo */
+    border: 1px solid #c3e6cb; /* Borda verde suave */
+    color: #155724; /* Texto verde escuro */
+  }
+
+  /* Ícone do alerta */
+  .alert-icon {
+    font-size: 1.2rem; /* Tamanho do ícone */
+    margin-right: 12px; /* Espaço entre ícone e texto */
+  }
+
+  /* Conteúdo textual do alerta */
+  .alert-content {
+    flex: 1; /* Ocupa todo o espaço restante */
+    font-weight: 500; /* Peso médio para destaque */
+  }
+}
+
+/* =============================== */
+/* ESTADO DE CARREGAMENTO */
+/* =============================== */
+.loading {
+  display: flex; /* Layout flex para centralização */
+  flex-direction: column; /* Empilha spinner e texto */
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  padding: 60px 20px; /* Espaçamento interno generoso */
+
+  /* Spinner de carregamento */
+  .spinner {
+    width: 40px; /* Largura fixa */
+    height: 40px; /* Altura fixa */
+    border: 4px solid #e3e3e3; /* Borda cinza clara */
+    border-top: 4px solid #3498db; /* Borda superior azul (parte animada) */
+    border-radius: 50%; /* Forma circular */
+    animation: spin 1s linear infinite; /* Animação contínua */
+    margin-bottom: 16px; /* Espaço abaixo do spinner */
+  }
+
+  /* Texto de carregamento */
+  p {
+    color: #7f8c8d; /* Cinza para texto secundário */
+    margin: 0; /* Remove margem padrão */
+  }
+}
+
+/* Animação do spinner - rotação contínua */
+@keyframes spin {
+  0% { transform: rotate(0deg); } /* Posição inicial */
+  100% { transform: rotate(360deg); } /* Rotação completa */
+}
+
+/* =============================== */
+/* CARD/CARTÃO DE CONTEÚDO */
+/* =============================== */
+.card {
+  background: white; /* Fundo branco para destaque */
+  border-radius: 12px; /* Cantos bem arredondados */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08); /* Sombra sutil para profundidade */
+  margin-bottom: 24px; /* Espaço abaixo do card */
+
+  /* Cabeçalho do card */
+  .card-header {
+    padding: 20px 24px; /* Espaçamento interno */
+    border-bottom: 1px solid #ecf0f1; /* Linha separadora */
+
+    /* Título do card */
+    .card-title {
+      margin: 0; /* Remove margem padrão */
+      font-size: 1.2rem; /* Tamanho médio */
+      font-weight: 600; /* Semi-negrito */
+      color: #2c3e50; /* Cor escura do tema */
+    }
+  }
+
+  /* Área de conteúdo do card */
+  .card-content {
+    padding: 0; /* Remove padding - controlado por elementos internos */
+  }
+}
+
+/* =============================== */
+/* ESTADO VAZIO (SEM CLIENTES) */
+/* =============================== */
+.empty-state {
+  display: flex; /* Layout flex para centralização */
+  flex-direction: column; /* Empilha elementos verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  padding: 60px 20px; /* Espaçamento interno generoso */
+  text-align: center; /* Texto centralizado */
+
+  /* Ícone do estado vazio */
+  .empty-icon {
+    font-size: 4rem; /* Ícone grande para destaque visual */
+    margin-bottom: 20px; /* Espaço abaixo do ícone */
+    opacity: 0.5; /* Transparência para tom mais suave */
+  }
+
+  /* Título do estado vazio */
+  h3 {
+    margin: 0 0 12px 0; /* Margem apenas abaixo */
+    color: #2c3e50; /* Cor escura do tema */
+    font-size: 1.5rem; /* Tamanho médio-grande */
+  }
+
+  /* Descrição do estado vazio */
+  p {
+    margin: 0 0 24px 0; /* Margem abaixo para separar do botão */
+    color: #7f8c8d; /* Cinza para texto secundário */
+    font-size: 1rem; /* Tamanho normal */
+    max-width: 400px; /* Largura máxima para boa legibilidade */
+    line-height: 1.5; /* Altura de linha confortável */
+  }
+}
+
+/* =============================== */
+/* CONTAINER DA TABELA */
+/* =============================== */
+.table-container {
+  overflow-x: auto; /* Habilita scroll horizontal em telas pequenas */
+}
+
+/* =============================== */
+/* TABELA DE DADOS */
+/* =============================== */
+.data-table {
+  width: 100%; /* Ocupa 100% da largura disponível */
+  border-collapse: collapse; /* Remove espaços entre bordas */
+  font-size: 0.9rem; /* Tamanho compacto para caber mais dados */
+
+  /* Cabeçalho da tabela */
+  thead {
+    background-color: #f8f9fa; /* Fundo cinza muito claro */
+    border-bottom: 2px solid #e9ecef; /* Borda inferior mais espessa */
+
+    /* Células do cabeçalho */
+    th {
+      padding: 16px 20px; /* Espaçamento interno */
+      text-align: left; /* Alinhamento à esquerda */
+      font-weight: 600; /* Texto em negrito */
+      color: #2c3e50; /* Cor escura */
+      font-size: 0.85rem; /* Tamanho menor que o corpo */
+      text-transform: uppercase; /* Texto em maiúsculas */
+      letter-spacing: 0.5px; /* Espaçamento entre letras para legibilidade */
+    }
+  }
+
+  /* Corpo da tabela */
+  tbody {
+    /* Linhas da tabela */
+    tr {
+      border-bottom: 1px solid #f8f9fa; /* Linha separadora sutil */
+      transition: background-color 0.2s; /* Transição suave para hover */
+
+      /* Efeito hover nas linhas */
+      &:hover {
+        background-color: #f8f9fa; /* Fundo cinza claro no hover */
+      }
+
+      /* Remove borda da última linha */
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    /* Células da tabela */
+    td {
+      padding: 16px 20px; /* Espaçamento interno */
+      color: #2c3e50; /* Cor escura do texto */
+
+      /* Célula do nome do cliente */
+      &.client-name {
+        font-weight: 600; /* Texto em negrito para destaque */
+      }
+
+      /* Célula de ações (botões) */
+      &.actions {
+        white-space: nowrap; /* Impede quebra de linha nos botões */
+      }
+    }
+  }
+}
+
+/* =============================== */
+/* CONTAINER DE AÇÕES (BOTÕES) */
+/* =============================== */
+.actions {
+  display: flex; /* Layout flex para botões lado a lado */
+  gap: 8px; /* Espaço entre botões */
+}
+
+/* =============================== */
+/* BOTÕES DE AÇÃO (EDITAR/EXCLUIR) */
+/* =============================== */
+.btn-action {
+  padding: 8px 12px; /* Espaçamento interno compacto */
+  border: none; /* Remove borda padrão */
+  border-radius: 4px; /* Cantos levemente arredondados */
+  cursor: pointer; /* Cursor de pointer */
+  transition: all 0.2s; /* Transição suave para hover */
+  font-size: 0.9rem; /* Tamanho compacto */
+  background: transparent; /* Fundo transparente por padrão */
+
+  /* Botão Editar */
+  &.btn-edit {
+    color: #3498db; /* Azul principal */
+    background: rgba(52, 152, 219, 0.1); /* Azul muito claro de fundo */
+
+    /* Efeito hover */
+    &:hover {
+      background: #3498db; /* Fundo azul sólido */
+      color: white; /* Texto branco para contraste */
+    }
+  }
+
+  /* Botão Excluir */
+  &.btn-delete {
+    color: #e74c3c; /* Vermelho para ações destrutivas */
+    background: rgba(231, 76, 60, 0.1); /* Vermelho muito claro de fundo */
+
+    /* Efeito hover */
+    &:hover {
+      background: #e74c3c; /* Fundo vermelho sólido */
+      color: white; /* Texto branco para contraste */
+    }
+  }
+}
+
+/* ============================================= */
+/* DESIGN RESPONSIVO - MOBILE FIRST */
+/* ============================================= */
+
+/* Breakpoint para tablets e mobile (até 768px) */
+@media (max-width: 768px) {
+
+  /* Ajustes no cabeçalho para mobile */
+  .page-header {
+    flex-direction: column; /* Empilha título e botão verticalmente */
+    gap: 16px; /* Espaço entre elementos empilhados */
+
+    /* Botão ocupa largura total em mobile */
+    .btn {
+      width: 100%;
+    }
+  }
+
+  /* Ajustes na tabela para mobile */
+  .data-table {
+    font-size: 0.8rem; /* Texto menor para caber na tela */
+
+    /* Esconde cabeçalho em mobile */
+    thead {
+      display: none;
+    }
+
+    /* Transforma tabela em cards em mobile */
+    tbody {
+      /* Cada linha vira um card independente */
+      tr {
+        display: block; /* Muda display para block */
+        margin-bottom: 16px; /* Espaço entre cards */
+        border: 1px solid #e9ecef; /* Borda ao redor do card */
+        border-radius: 8px; /* Cantos arredondados */
+        padding: 0; /* Remove padding padrão */
+      }
+
+      /* Células viram linhas do card */
+      td {
+        display: flex; /* Layout flex para label e valor */
+        justify-content: space-between; /* Espaço entre label e valor */
+        align-items: center; /* Alinha verticalmente */
+        padding: 12px 16px; /* Espaçamento reduzido */
+        border-bottom: 1px solid #f8f9fa; /* Linha separadora */
+
+        /* Remove borda da última célula */
+        &:last-child {
+          border-bottom: none;
+        }
+
+        /* Adiciona label antes do conteúdo (via pseudo-elemento) */
+        &::before {
+          content: attr(data-label); /* Pega label do atributo data-label */
+          font-weight: 600; /* Texto em negrito */
+          color: #2c3e50; /* Cor escura */
+          text-transform: uppercase; /* Texto em maiúsculas */
+          font-size: 0.75rem; /* Tamanho pequeno */
+          letter-spacing: 0.5px; /* Espaçamento entre letras */
+        }
+
+        /* Ajustes específicos para célula de ações */
+        &.actions {
+          justify-content: flex-end; /* Alinha ações à direita */
+          gap: 8px; /* Espaço entre botões */
+        }
+      }
+    }
+  }
+
+  /* =============================== */
+  /* LABELS PARA CÉLULAS EM MOBILE */
+  /* =============================== */
+  /* Define os labels para cada coluna quando em layout mobile */
+  .data-table tbody td:nth-child(1)::before { content: "Nome"; }
+  .data-table tbody td:nth-child(2)::before { content: "Email"; }
+  .data-table tbody td:nth-child(3)::before { content: "Telefone"; }
+  .data-table tbody td:nth-child(4)::before { content: "Cadastro"; }
+  .data-table tbody td:nth-child(5)::before { content: "Ações"; }
+}

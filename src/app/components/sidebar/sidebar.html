@@ -1,0 +1,44 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>InnoveL</h2>
+  </div>
+
+  <nav class="sidebar-menu">
+    <!-- Loop através dos itens do menu -->
+    <ng-container *ngFor="let item of menuItems">
+      <div *ngIf="shouldShowItem(item)"
+           class="menu-item"
+           [class.active]="item.active || (item.children && hasActiveChild(item.children))"
+           [class.has-children]="item.children"
+           [class.expanded]="item.expanded">
+
+        <!-- Item Principal do Menu -->
+        <div class="menu-main-item" (click)="navigateTo(item.route || '', item)">
+          <div class="menu-left">
+            <span class="menu-icon">{{ item.icon }}</span>
+            <span class="menu-text">{{ item.label }}</span>
+          </div>
+
+          <!-- Seta indicadora para itens com submenu -->
+          <span *ngIf="item.children" class="menu-arrow">
+            {{ item.expanded ? '▼' : '▶' }}
+          </span>
+        </div>
+
+        <!-- Submenu (itens filhos) -->
+        <div *ngIf="item.children && item.expanded" class="submenu">
+          <!-- Loop através dos subitens usando ng-container -->
+          <ng-container *ngFor="let subItem of item.children">
+            <div *ngIf="shouldShowSubitem(subItem)"
+                 class="submenu-item"
+                 [class.active]="subItem.active"
+                 (click)="navigateToSubmenu(item, subItem, $event)">
+              <span class="submenu-icon">•</span>
+              <span class="submenu-text">{{ subItem.label }}</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </nav>
+</aside>
